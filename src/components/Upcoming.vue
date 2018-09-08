@@ -1,9 +1,11 @@
 <template>
   <div class="upcoming">
     <div v-for="item in upcomingList">
+      <span>edit</span>
         {{item.title}}@{{item.place}},
         {{item.remain.days}} {{item.remain.hours}} 
         {{item.remain.minutes}} {{item.remain.seconds}}
+      <span>done</span>
     </div>
   </div>
 </template>

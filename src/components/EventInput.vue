@@ -1,11 +1,11 @@
 <template>
   <div class="event-input">
-    <input type="text" v-bind:placeholder="placeholder" v-model="eventName"/>
+    <input type="text" v-bind:placeholder="placeholder" v-model="currEvent.title"/>
     <input type="button" value = "+" v-on:click="toggleDropdown(this)"/>
     <span>[ ]</span>
     <div class="event-input" v-if="isDropdownActive">
       <div><span>Time</span><input type="text" v-model="currEvent.date" v-on:focus="enableDatePicker(this)" /></div>
-      <DatePicker v-if="isDatePickerActive" v-bind:currDate="currEvent.date" v-bind:hide="disableDatePicker(this)"/>
+      <DatePicker v-if="isDatePickerActive" v-bind:currDate="currEvent.date" v-bind:setDate="changeDate(this)" v-bind:hide="disableDatePicker(this)"/>
       <div><span>Place</span><input type="text" v-model="currEvent.place"/></div>
       <div><input type="button" value="Add new event" v-on:click="addEvent(this)"/></div>
     </div>
@@ -26,26 +26,29 @@ export default class EventInput extends Vue {
     @Prop() private msg!: string;
     @Prop() public formatEvents: any;
     private isDropdownActive = false;
-    public isDatePickerActive = false;
-    private eventName = '';
+    protected isDatePickerActive = false;
     private placeholder = this.msg || ''; // placeholder 'placeholder' displays value of prop 'msg'
-    private currEvent = new Event(new Date(), this.eventName, '', 0);
+    private currEvent = new Event(new Date(), '', '', 0);
+    protected changeDate = function(this:any){
+      return (function(this:any,newDate:any){
+        this.currEvent.date = newDate;
+      }).bind(this);
+    }
     private toggleDropdown = function(this: any){
       this.isDropdownActive = !this.isDropdownActive;
     }
     private enableDatePicker = function(this:any){
       this.isDatePickerActive = true;
     }
-    public disableDatePicker = function(this:any){
+    protected disableDatePicker = function(this:any){
       return (function(this:any){
         this.isDatePickerActive = false;
       }).bind(this);
     }
     private addEvent = function(this: any){
-      if(this.eventName==='')return;
-      this.currEvent = new Event(new Date(), this.eventName, '', 0);
+      if(this.currEvent.title==='')return;
       this.formatEvents.push(this.currEvent);
-      this.eventName = '';
+      this.currEvent = new Event(new Date(), '', '', 0);
     }
 }
 </script>

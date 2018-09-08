@@ -2,7 +2,10 @@
   <div>
     <div>M T W T F S S</div>
     <div v-for="w in computed.dateList.get()">
-      <span v-for="d in w"><button v-on:click="hide()">{{d}}</button></span>
+      <span v-for="d in w">
+        <span v-if="!d.active">{{d.date+' '}}</span>
+        <button v-if="d.active" v-on:click="selectDate(d.date) ">{{d.date}}</button>
+      </span>
     </div>
     <div>
       <input type="button" value="<-" v-on:click="update(0,-1)"/>
@@ -18,6 +21,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class DatePicker extends Vue {
     @Prop() public currDate: any;
     @Prop() public hide: any;
+    @Prop() public setDate:any;
+    private selectDate(d: number){
+      this.update(0,0,d);
+      this.hide();
+    }
     computed = {
       dateList:{
         date: new Date(),
@@ -30,14 +38,17 @@ export default class DatePicker extends Vue {
           let currMonthLen = new Date(this.m,this.m+1,0).getDate();
           let lastMonthLen = new Date(this.m-1,this.m,0).getDate();
           let nextMonthLen = new Date(this.m+1,this.m+2,0).getDate();
-          let list: Array<Array<number>> = [];
+          let list: Array<Array<object>> = [];
           let w=0;
           let firstDayInCurrMonth = new Date(this.y,this.date.getMonth(),1).getDay();
-          console.log(firstDayInCurrMonth,this.y,this.date.getMonth())
+          // console.log(firstDayInCurrMonth,this.y,this.date.getMonth())
           if(firstDayInCurrMonth!==1){
             for(let i=firstDayInCurrMonth-2;i>=0;i--){
               list[w] = list[w]||[];
-              list[w].push(lastMonthLen-i);
+              list[w].push({
+                date:lastMonthLen-i,
+                active: false,
+              });
             }
           }
           for(let i=1;i<=currMonthLen;i++){
@@ -46,10 +57,16 @@ export default class DatePicker extends Vue {
               w++;
               list[w] = list[w]||[];
             }
-            list[w].push(i);
+            list[w].push({
+              date:i,
+              active: true
+            });
           }
           for(let i = list[list.length-1].length,j=1;i<7;i++,j++){
-            list[list.length-1].push(j);
+            list[list.length-1].push({
+              date:j,
+              active:false
+            });
           }
           return list;
         },
@@ -66,10 +83,20 @@ export default class DatePicker extends Vue {
         }
       }
     }
-    update(dy:number, dm:number){
-      let [year, month]= [this.currDate.getFullYear()+dy,this.currDate.getMonth()+dm];
-      this.computed.dateList.update = [year,month];
-      this.currDate = new Date(this.currDate.getFullYear()+dy,this.currDate.getMonth()+dm,this.currDate.getDate())
+    update(dy:number =0, dm:number =0, day:number){
+      if(dy!==0||dm!==0){
+        let [year, month]= [this.currDate.getFullYear()+dy,this.currDate.getMonth()+dm];
+        if(month>11){
+          year+=1;
+          month-=12;
+        }else if(month<0){
+          month+=12;
+          year-=1;
+        }
+        this.computed.dateList.update = [year,month];
+      }
+      this.setDate(new Date(this.currDate.getFullYear()+dy,this.currDate.getMonth()+dm,day||this.currDate.getDate()));
+      // console.log('x',this.currDate);
     }
 }
 </script>

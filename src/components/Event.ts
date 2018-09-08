@@ -1,10 +1,12 @@
 export default class Event {
+    protected id:number;
     protected date: Date;
     protected title: string;
     protected place: string;
     protected status: number;
     protected remain: object;
     constructor(date: Date, title: string, place: string, status: number) {
+        this.id=-1;
         this.date = date;
         this.title = title;
         this.place = place;
@@ -19,6 +21,7 @@ export default class Event {
 
     toObject=()=>{
         return {
+            id: this.id,
             date: this.date,
             title: this.title,
             place: this.place,
