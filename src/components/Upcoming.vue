@@ -1,12 +1,10 @@
 <template>
   <div class="upcoming">
-    <ul>
-        <li v-for="item in upcomingList">
-            {{item.title}}@{{item.place}},
-            {{item.remain.days}} {{item.remain.hours}} 
-            {{item.remain.minutes}} {{item.remain.seconds}}
-        </li>
-    </ul>
+    <div v-for="item in upcomingList">
+        {{item.title}}@{{item.place}},
+        {{item.remain.days}} {{item.remain.hours}} 
+        {{item.remain.minutes}} {{item.remain.seconds}}
+    </div>
   </div>
 </template>
 
@@ -47,7 +45,6 @@ export default class Upcoming extends Vue {
     for(let i in this.upcomingList){
       let t = this.timeBetween(this.upcomingList[i].date,new Date());
       this.upcomingList[i].remain = t;
-      // console.log(t);
     }
     setInterval(this.updateTime, 1000);
   };
