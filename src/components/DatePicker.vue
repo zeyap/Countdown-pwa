@@ -33,8 +33,9 @@ export default class DatePicker extends Vue {
           let list: Array<Array<number>> = [];
           let w=0;
           let firstDayInCurrMonth = new Date(this.y,this.date.getMonth(),1).getDay();
+          console.log(firstDayInCurrMonth,this.y,this.date.getMonth())
           if(firstDayInCurrMonth!==1){
-            for(let i=firstDayInCurrMonth-1;i>=0;i--){
+            for(let i=firstDayInCurrMonth-2;i>=0;i--){
               list[w] = list[w]||[];
               list[w].push(lastMonthLen-i);
             }
@@ -60,7 +61,7 @@ export default class DatePicker extends Vue {
             this.y = year;
             this.m = month;
             this.date = new Date(this.y,this.m,this.d)
-            console.log('change',this.y,this.m)
+            // console.log('change',this.y,this.m)
           }
         }
       }
