@@ -2,7 +2,9 @@
   <div class="upcoming">
     <ul>
         <li v-for="item in upcomingList">
-            {{item.title}}@{{item.place}}, {{interval}} days
+            {{item.title}}@{{item.place}},
+            {{item.remain.days}} {{item.remain.hours}} 
+            {{item.remain.minutes}} {{item.remain.seconds}}
         </li>
     </ul>
   </div>
@@ -10,18 +12,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import Event from './Event';
 
 @Component({
 })
 export default class Upcoming extends Vue {
   @Prop() private upcomingList: any;
-  // constructor(super){
-  //   super();
-  //   while(true){
-  //     this.interval = this.timeBetween();
-  //   }
-  // };
   private timeBetween = function( date1: Date, date2: Date ) {
     //Get 1 day in milliseconds
     let one_day=1000*60*60*24;
@@ -37,21 +32,28 @@ export default class Upcoming extends Vue {
     }
     difference_ms = date1.getTime() - date2.getTime();
     let days = Math.floor(difference_ms/one_day);
-    difference_ms-=days*one_day;
+    difference_ms -= days*one_day;
     let hours = Math.floor(difference_ms/one_hour);
-    difference_ms-=hours*one_hour;
+    difference_ms -=hours*one_hour;
     let minutes = Math.floor(difference_ms/one_minute);
-    difference_ms-=minutes*one_minute;
+    difference_ms -=minutes*one_minute;
     let seconds = Math.floor(difference_ms/1000);
     // Convert back to days and return
     return {
       days,hours,minutes,seconds
     };
   };
-  private interval:object = {
-    days:0,hours:0,minutes:0,seconds:0
+  private updateTime(){
+    for(let i in this.upcomingList){
+      let t = this.timeBetween(this.upcomingList[i].date,new Date());
+      this.upcomingList[i].remain = t;
+      // console.log(t);
+    }
+    setInterval(this.updateTime, 1000);
   };
-  private currTime = new Date();
+  mounted(){
+    this.updateTime();
+  }
 }
 </script>
 

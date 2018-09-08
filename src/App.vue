@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-      <EventInput msg="What's new for today?"/>
-      <Upcoming v-bind:upcomingList="formatEvents"/>
+      <EventInput v-bind:formatEvents="formatEvents" msg="What's next?"/>
+      <Upcoming v-bind:upcomingList="formatEvents" />
       <Ended/>
   </div>
 </template>
@@ -29,7 +29,7 @@ import Event from './components/Event';
 
 export default class App extends Vue {
   public formatEvents = data.default
-  .map((e: any) => new Event(e.date, e.title, e.place, e.status))
+  .map((e: any) => new Event(e.date, e.title, e.place, e.status));
   // console.log(formatEvents: any)
 }
 </script>
