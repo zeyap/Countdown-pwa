@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-      <EventInput v-bind:formatEvents="formatEvents" msg="What's next?"/>
       <Upcoming v-bind:upcomingList="formatEvents" />
       <Ended/>
   </div>
@@ -8,7 +7,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import EventInput from './components/EventInput.vue';
+
 import Upcoming from './components/Upcoming.vue';
 import Ended from './components/Ended.vue';
 
@@ -21,7 +20,6 @@ import Event from './components/Event';
 
 @Component({
   components: {
-    EventInput,
     Upcoming,
     Ended,
   },

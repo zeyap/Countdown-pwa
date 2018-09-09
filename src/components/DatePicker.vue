@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div><input type="button" value="<-" v-on:click="update(-1,0)"/>
+    {{currDate.getFullYear()}}
+    <input type="button" value="->" v-on:click="update(1,0)"/>
+    <input type="button" value="<-" v-on:click="update(0,-1)"/>
+      {{(currDate.getMonth()+1)%13}}
+    <input type="button" value="->" v-on:click="update(0,1)"/>
+    </div>
     <div>M T W T F S S</div>
     <div v-for="w in computed.dateList.get()">
       <span v-for="d in w">
@@ -8,8 +15,6 @@
       </span>
     </div>
     <div>
-      <input type="button" value="<-" v-on:click="update(0,-1)"/>
-      <input type="button" value="->" v-on:click="update(0,1)"/>
     </div>
   </div>
 </template>

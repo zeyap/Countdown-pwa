@@ -1,6 +1,6 @@
 export default class Event {
     protected id:number;
-    protected date: Date;
+    public date: Date;
     protected title: string;
     protected place: string;
     protected status: number;

@@ -1,19 +1,26 @@
 <template>
+<div>
+  <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="What's next?"/>
   <div class="upcoming">
-    <div v-for="item in upcomingList">
-      <span>edit</span>
+    <div v-for="item,id in upcomingList">
+      <span v-on:click="editEvent(id)">edit</span>
         {{item.title}}@{{item.place}},
         {{item.remain.days}} {{item.remain.hours}} 
         {{item.remain.minutes}} {{item.remain.seconds}}
-      <span>done</span>
+      <span v-on:click="removeEvent(id)">done</span>
     </div>
   </div>
+</div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import EventInput from './EventInput.vue';
 
 @Component({
+  components:{
+    EventInput,
+  }
 })
 export default class Upcoming extends Vue {
   @Prop() private upcomingList: any;
@@ -50,6 +57,15 @@ export default class Upcoming extends Vue {
     }
     setInterval(this.updateTime, 1000);
   };
+  private currEventId = -1;
+  public editEvent(id:number){
+    this.currEventId = id;
+  }
+  public removeEvent(id:number){
+    if(confirm('You are deleting a countdown')){
+      this.upcomingList.splice(id,1);
+    }
+  }
   mounted(){
     this.updateTime();
   }
