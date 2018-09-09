@@ -11,7 +11,7 @@
     <div v-for="w in computed.dateList.get()">
       <span v-for="d in w">
         <span v-if="!d.active">{{d.date+' '}}</span>
-        <button v-if="d.active" v-on:click="selectDate(d.date) ">{{d.date}}</button>
+        <button v-if="d.active" v-on:click="selectDate(d.date)">{{d.date}}</button>
       </span>
     </div>
     <div>

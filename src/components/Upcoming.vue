@@ -1,6 +1,6 @@
 <template>
 <div>
-  <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="What's next?"/>
+  <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="Hello Barb!"/>
   <div class="upcoming">
     <div v-for="item,id in upcomingList">
       <span v-on:click="editEvent(id)">edit</span>

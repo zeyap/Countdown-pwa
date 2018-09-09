@@ -6,13 +6,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 
 import Upcoming from './components/Upcoming.vue';
 import Ended from './components/Ended.vue';
 
-import data from './assets/test_events.json';
 import Event from './components/Event';
+import data from './assets/test_events.json';
 
 // const testData = data.default
 //   .map((e: any) => new Event(e.date, e.title, e.place, e.status));
@@ -24,11 +24,19 @@ import Event from './components/Event';
     Ended,
   },
 })
-
 export default class App extends Vue {
-  public formatEvents = data.default
-  .map((e: any) => new Event(e.date, e.title, e.place, e.status));
-  // console.log(formatEvents: any)
+  @Prop() public formatEvents: any;
+  created(){
+    if(undefined === window.localStorage.getItem('events')){
+      window.localStorage.setItem('events',JSON.stringify(data));
+    }
+    this.formatEvents = JSON.parse(window.localStorage.getItem('events') as any)
+    ['default'].map((e: any) => new Event(e.date, e.title, e.place, e.status));
+    let self = this;
+    window.addEventListener('beforeunload',function(){
+      window.localStorage.setItem('events',JSON.stringify({'default':self.formatEvents}));
+    })
+  };
 }
 </script>
 
