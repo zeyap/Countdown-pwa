@@ -1,12 +1,15 @@
 <template>
-  <div class="event-input">
-    <input type="text" v-bind:placeholder="placeholder" v-model="currEvent.title"/>
-    <input type="button" value = "+" v-on:click="toggleDropdown(this)"/>
+  <div>
+    <div class="title-box">
+    <input type="text" v-bind:placeholder="placeholder" v-model="currEvent.title" class="title-input"/>
+    <div v-on:click="toggleDropdown(this)" class="add-sign">+</div>
+    </div>
     <div class="event-input" v-if="isDropdownActive">
-      <div><span>Time</span><input type="text" v-bind:value="formatDate(currEvent.date)" v-on:focus="enableDatePicker(this)"/>
+      <div class="left"><span><B>Time&nbsp&nbsp</B></span><input class="input-font" type="text" v-bind:value="formatDate(currEvent.date)" v-on:focus="enableDatePicker(this)"/>
       <DatePicker v-if="isDatePickerActive" v-bind:currDate="currEvent.date" v-bind:setDate="changeDate(this)" v-bind:hide="disableDatePicker(this)"/></div>
-      <div><span>Place</span><input type="text" v-model="currEvent.place"/></div>
-      <div><input type="button" v-bind:value="this.currEventId===-1?'Add':'Save Change'" v-on:click="addEvent(this)"/></div>
+
+      <div class="right"><span><B>Place&nbsp&nbsp</B></span><input class="input-font" type="text" v-model="currEvent.place" /></div>
+      <div class="input-font"><input type="button" v-bind:value="'Save'" v-on:click="addEvent(this)"/></div>
     </div>
   </div>
 </template>
@@ -57,8 +60,8 @@ export default class EventInput extends Vue {
       if(date instanceof Date === false){
         date = new Date(date);
       }
-      const months = ['January','February','March','April','May','June',
-      'July','August','September','October','November','December'];
+      const months = ['Jan','Feb','Mar','April','May','Jun',
+      'Jul','Aug','Sept','Oct','Nov','Dec'];
       let str = months[date.getMonth()] +' '+ date.getDate()+', '+date.getFullYear();
       return str;
     }
@@ -96,5 +99,45 @@ export default class EventInput extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.event-input{
+  font-size: 1.1em;
+}
+.title-box{
+  width: 100%;
+  margin: 30px 0px;
+  border-bottom: black solid 1px;
+  color: #bbbbbb;
+}
+.add-sign{
+  width: 15%;
+  height: 85px;
+  display: inline-block;
+  align-content: center;
+  font-size: 4em;
+  color: #666666;
+  border: #999999 dashed 1px;
+}
+.title-input{
+  width: 84%;
+  height:100px;
+  font-size: 4em;
+  border: none;
+  color: #666666;
+  background: #eeeeee;
+}
+.left{
+  text-align: left;
+  float:left;
+  height:100%;
+  width: 50%;
+}
+.right{
+  text-align: left;
+  float:left;
+}
+
+.input-font{
+  font-size: 1em;
+}
 
 </style>

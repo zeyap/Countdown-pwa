@@ -1,17 +1,18 @@
 <template>
   <div>
-    <div><input type="button" value="<-" v-on:click="update(-1,0)"/>
+    <div class="selector"><span v-on:click="update(-1,0)">{{"<--"}}</span>
     {{currDate.getFullYear()}}
-    <input type="button" value="->" v-on:click="update(1,0)"/>
-    <input type="button" value="<-" v-on:click="update(0,-1)"/>
+    <span v-on:click="update(1,0)">{{"-->"}}</span>
+    &nbsp&nbsp
+    <span v-on:click="update(0,-1)">{{"<--"}}</span>
       {{(currDate.getMonth()+1)%13}}
-    <input type="button" value="->" v-on:click="update(0,1)"/>
+    <span v-on:click="update(0,1)">{{"-->"}}</span>
     </div>
-    <div>M T W T F S S</div>
+    <div><span v-for="d in ['M','T','W','T','F','S','S']" class="cell"><B>{{d}}</B></span></div>
     <div v-for="w in computed.dateList.get()">
       <span v-for="d in w">
-        <span v-if="!d.active">{{d.date+' '}}</span>
-        <button v-if="d.active" v-on:click="selectDate(d.date)">{{d.date}}</button>
+        <span v-if="!d.active" class="cell inactive">{{d.date+' '}}</span>
+        <span v-if="d.active" v-on:click="selectDate(d.date)" class="cell">{{d.date}}</span>
       </span>
     </div>
     <div>
@@ -108,5 +109,16 @@ export default class DatePicker extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.cell{
+  display:inline-block;
+  width: 30px;
+  height:30px;
+}
+.inactive{
+  color: #cccccc;
+}
+.selector{
+  margin: 20px 0
+}
 
 </style>

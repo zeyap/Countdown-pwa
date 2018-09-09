@@ -1,13 +1,17 @@
 <template>
-<div>
-  <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="Hello Barb!"/>
+<div class="wrapper">
+  <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="Hi Barb."/>
   <div class="upcoming">
-    <div v-for="item,id in upcomingList">
-      <span v-on:click="editEvent(id)">edit</span>
-        {{item.title}}@{{item.place}},
-        {{item.remain.days}} {{item.remain.hours}} 
-        {{item.remain.minutes}} {{item.remain.seconds}}
-      <span v-on:click="removeEvent(id)">done</span>
+    <div v-for="item,id in upcomingList" class="event-card">
+      <div class="hover-box" style="float:left"><div class="edit" v-on:click="editEvent(id)"><B>edit</B></div></div>
+        <div class="card-left"><div class="text"><div><span class="countdown-large">{{item.remain.days}}</span><span class="countdown-small">days</span></div> <div class="countdown-small"><B>{{item.remain.hours}}</B>h <B>{{item.remain.minutes}}</B>m <B>{{item.remain.seconds}}</B>s </div></div></div>
+        <div class="card-right">
+          <div class="text">
+          <div class="meta-large">{{item.title}}</div>
+          <div class="meta-small"><img src="./location.png" class="location-icon" height="30" width="19">&nbsp&nbsp{{item.place}}</div>
+          </div>
+        </div>
+      <div class="hover-box" style="float:right"><div class="remove" v-on:click="removeEvent(id)"><B>done</B></div></div>
     </div>
   </div>
 </div>
@@ -69,10 +73,95 @@ export default class Upcoming extends Vue {
   mounted(){
     this.updateTime();
   }
+  private formatDate(date:any){
+    if(date instanceof Date ===false){
+      date = new Date(date);
+    }
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.wrapper{
+  max-width: 600px;
+  margin: 0 auto;
+}
+.event-card{
+  width: 100%;
+  border: #dddddd solid 1px;
+  height: 140px;
+  margin: 20px 0;
+  padding: 20px 0;
+  display: inline-block; 
+  background: #ffffff;
+}
+.card-left{
+  float: left;
+  display: inline-block;
+  height: 100%;
+  width: 25%;
+  border-right: #dddddd solid 2px;
+}
+.card-right{
+  align-items: left;
+  text-align: left;
+  float: left;
+  height: 100%;
+}
+.hover-box{
+  width: 5px;
+  height:100%;
+  display:inline-block;
+}
+.hover-box:hover .edit{
+  display:inline-block;
+}
+.hover-box:hover{
+  width:50px;
+}
+.hover-box:hover .remove{
+  display:inline-block;
+}
+.edit{
+  float:left;
+  height:100%;
+  display: none;
+  width:50px;
+  background: #893987;
+  color: white;
+}
+
+.remove{
+  float:right;
+  height:100%;
+  display: none;
+  width:50px;
+  background: #e54e71;
+  color: white;
+}
+
+.text{
+  padding: 0px 25px;
+  font-size: 1.5em;
+}
+.countdown-large{
+  color: #893987;
+  font-size: 2.4em;
+}
+.countdown-small{
+  color: #ad48aa;
+  font-size: 0.7em;
+}
+.meta-large{
+  font-size: 1.5em;
+}
+.meta-small{
+  padding:0;
+  color: #999999;
+}
+.location-icon{
+  padding: 20px 0 0 0
+}
 
 </style>

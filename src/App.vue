@@ -1,7 +1,6 @@
 <template>
   <div id="app">
       <Upcoming v-bind:upcomingList="formatEvents" />
-      <Ended/>
   </div>
 </template>
 
@@ -9,7 +8,6 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 
 import Upcoming from './components/Upcoming.vue';
-import Ended from './components/Ended.vue';
 
 import Event from './components/Event';
 import data from './assets/test_events.json';
@@ -21,7 +19,6 @@ import data from './assets/test_events.json';
 @Component({
   components: {
     Upcoming,
-    Ended,
   },
 })
 export default class App extends Vue {
@@ -47,6 +44,8 @@ export default class App extends Vue {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 60px;
+  padding-bottom: -60px;
+  background: #eeeeee;
 }
 </style>
