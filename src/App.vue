@@ -25,7 +25,7 @@ import data from './assets/test_events.json';
   },
 })
 export default class App extends Vue {
-  @Prop() public formatEvents: any;
+  public formatEvents = [];
   created(){
     if(undefined === window.localStorage.getItem('events')){
       window.localStorage.setItem('events',JSON.stringify(data));
