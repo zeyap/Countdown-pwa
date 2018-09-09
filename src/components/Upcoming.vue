@@ -3,7 +3,7 @@
   <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="Hi Barb."/>
   <div class="upcoming">
     <div v-for="item,id in upcomingList" class="event-card">
-      <div class="hover-box" style="float:left"><div class="edit" v-on:click="editEvent(id)"><B>edit</B></div></div>
+      <div class="hover-box purple" style="float:left"><div class="edit" v-on:click="editEvent(id)"><B>edit</B></div></div>
         <div class="card-left"><div class="text"><div><span class="countdown-large">{{item.remain.days}}</span><span class="countdown-small">days</span></div> <div class="countdown-small"><B>{{item.remain.hours}}</B>h <B>{{item.remain.minutes}}</B>m <B>{{item.remain.seconds}}</B>s </div></div></div>
         <div class="card-right">
           <div class="text">
@@ -11,7 +11,7 @@
           <div class="meta-small"><img src="./location.png" class="location-icon" height="30" width="19">&nbsp&nbsp{{item.place}}</div>
           </div>
         </div>
-      <div class="hover-box" style="float:right"><div class="remove" v-on:click="removeEvent(id)"><B>done</B></div></div>
+      <div class="hover-box pink" style="float:right"><div class="remove" v-on:click="removeEvent(id)"><B>done</B></div></div>
     </div>
   </div>
 </div>
@@ -113,6 +113,12 @@ export default class Upcoming extends Vue {
   width: 5px;
   height:100%;
   display:inline-block;
+}
+.purple{
+  background: #893987;
+}
+.pink{
+  background: #e54e71;
 }
 .hover-box:hover .edit{
   display:inline-block;

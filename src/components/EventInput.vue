@@ -5,7 +5,7 @@
     <div v-on:click="toggleDropdown(this)" class="add-sign">+</div>
     </div>
     <div class="event-input" v-if="isDropdownActive">
-      <div class="left"><span><B>Time&nbsp&nbsp</B></span><input class="input-font" type="text" v-bind:value="formatDate(currEvent.date)" v-on:focus="enableDatePicker(this)"/>
+      <div class="left"><span><B>Time&nbsp&nbsp</B></span><input class="input-font" type="text" v-bind:value="formatDate(currEvent.date)" v-on:mouseover="enableDatePicker(this)"/>
       <DatePicker v-if="isDatePickerActive" v-bind:currDate="currEvent.date" v-bind:setDate="changeDate(this)" v-bind:hide="disableDatePicker(this)"/></div>
 
       <div class="right"><span><B>Place&nbsp&nbsp</B></span><input class="input-font" type="text" v-model="currEvent.place" /></div>

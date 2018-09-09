@@ -1,19 +1,22 @@
 <template>
-  <div>
-    <div class="selector"><span v-on:click="update(-1,0)">{{"<--"}}</span>
+  <div class="date-picker-wrapper" v-on:mouseleave="hide()">
+    <div class="selector"><span class="arrow rotated" v-on:click="update(-1,0)">{{"&#9664;"}}</span>
     {{currDate.getFullYear()}}
-    <span v-on:click="update(1,0)">{{"-->"}}</span>
+    <span class="arrow" v-on:click="update(1,0)">{{"&#9654;"}}</span>
     &nbsp&nbsp
-    <span v-on:click="update(0,-1)">{{"<--"}}</span>
+    <span class="arrow rotated" v-on:click="update(0,-1)">{{"&#9664;"}}</span>
       {{(currDate.getMonth()+1)%13}}
-    <span v-on:click="update(0,1)">{{"-->"}}</span>
+    <span class="arrow" v-on:click="update(0,1)">{{"&#9654;"}}</span>
     </div>
-    <div><span v-for="d in ['M','T','W','T','F','S','S']" class="cell"><B>{{d}}</B></span></div>
+    <div class="calendar">
+    <div class="calendar-row"><span v-for="d in ['M','T','W','T','F','S','S']" class="cell"><B>{{d}}</B></span></div>
     <div v-for="w in computed.dateList.get()">
       <span v-for="d in w">
         <span v-if="!d.active" class="cell inactive">{{d.date+' '}}</span>
-        <span v-if="d.active" v-on:click="selectDate(d.date)" class="cell">{{d.date}}</span>
+        <span v-if="d.active&&d.date!==currDate.getDate()" v-on:click="selectDate(d.date)" class="cell">{{d.date}}</span>
+        <span v-if="d.active&&d.date===currDate.getDate()" v-on:click="selectDate(d.date)" class="cell cell-selected">{{d.date}}</span>
       </span>
+    </div>
     </div>
     <div>
     </div>
@@ -109,16 +112,42 @@ export default class DatePicker extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.date-picker-wrapper{
+  background: #ffffff;
+  border: #dddddd solid 1px;
+  width: 240px;
+  align-self:flex-end;
+}
 .cell{
   display:inline-block;
   width: 30px;
   height:30px;
+  text-align: center;
 }
 .inactive{
   color: #cccccc;
 }
 .selector{
-  margin: 20px 0
+  padding: 15px 15px 5px 15px;
+  text-align: center;
+  /* margin: auto; */
+  background: #893987;
+  color: #ffffff;
 }
-
+.calendar{
+  padding: 15px;
+}
+.arrow{
+  color: #ffffff;
+}
+.rotated{
+  transform: rotateZ(45deg);
+  -ms-transform:rotate(45deg); 	/* IE 9 */
+  -moz-transform:rotate(45deg); 	/* Firefox */
+  -webkit-transform:rotate(45deg); /* Safari 和 Chrome */
+  -o-transform:rotate(45deg); 	/* Opera */
+}
+.cell-selected{
+  outline:#893987 solid 1px;
+}
 </style>
