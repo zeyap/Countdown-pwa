@@ -1,15 +1,14 @@
 <template>
   <div>
     <div class="title-box">
-    <input type="text" v-bind:placeholder="placeholder" v-model="currEvent.title" class="title-input"/>
-    <div v-on:click="toggleDropdown(this)" class="add-sign">+</div>
+      <div v-if="!isDropdownActive" v-on:click="toggleDropdown(this)" class="add-sign">+</div>
+      <div v-if="isDropdownActive" v-on:click="addEvent(this)" class="add-sign add-sign-save">SAVE</div>
+      <div class="title-input-wrapper"><input type="text" v-bind:placeholder="placeholder" v-model="currEvent.title" class="title-input"/></div>
     </div>
-    <div class="event-input" v-if="isDropdownActive">
-      <div class="left"><span><B>Time&nbsp&nbsp</B></span><input class="input-font" type="text" v-bind:value="formatDate(currEvent.date)" v-on:mouseover="enableDatePicker(this)"/>
+    <div class="timeplace-input" v-if="isDropdownActive">
+      <div class="left"><span>TIME&nbsp&nbsp</span><input class="tp-input-font" type="text" v-bind:value="formatDate(currEvent.date)" v-on:mouseover="enableDatePicker(this)"/>
       <DatePicker v-if="isDatePickerActive" v-bind:currDate="currEvent.date" v-bind:setDate="changeDate(this)" v-bind:hide="disableDatePicker(this)"/></div>
-
-      <div class="right"><span><B>Place&nbsp&nbsp</B></span><input class="input-font" type="text" v-model="currEvent.place" /></div>
-      <div class="input-font"><input type="button" v-bind:value="'Save'" v-on:click="addEvent(this)"/></div>
+      <div class="right"><span>LOCATION&nbsp&nbsp</span><input class="tp-input-font" type="text" v-model="currEvent.place" /></div>
     </div>
   </div>
 </template>
@@ -99,45 +98,123 @@ export default class EventInput extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.event-input{
+.timeplace-input{
+  position: relative;
   font-size: 1.1em;
-}
-.title-box{
+  display: block;
   width: 100%;
-  margin: 30px 0px;
-  border-bottom: black solid 1px;
-  color: #bbbbbb;
+  padding-left: 20px;
 }
-.add-sign{
-  width: 15%;
-  height: 85px;
-  display: inline-block;
-  align-content: center;
-  font-size: 4em;
-  color: #666666;
-  border: #999999 dashed 1px;
-}
-.title-input{
-  width: 84%;
-  height:100px;
-  font-size: 4em;
-  border: none;
-  color: #666666;
-  background: #eeeeee;
-}
-.left{
+@media only screen and (min-width: 887px) {
+  .add-sign{
+    float: left;
+    width: 80px;
+    height: 80px;
+    align-content: center;
+    line-height: 80px;
+    font-size: 2em;
+    text-align: center;
+    color: #666666;
+    border: #999999 dashed 1px;
+    margin: 0 20px;
+  }
+  .title-input{
+    float:left;
+    font-size: 3em;
+    height: 80px;
+    line-height: 80px;
+    border: none;
+    color: #666666;
+    background: #eeeeee;
+  }
+  .title-box{
+    display: block;
+    height: 80px;
+    margin: 30px 0px;
+    width: 100%;
+    /* border-bottom: black solid 1px; */
+    color: #bbbbbb;
+  }
+  .left{
   text-align: left;
   float:left;
   height:100%;
-  width: 50%;
+  width: 300px;
 }
 .right{
   text-align: left;
   float:left;
+  width: 300px;
+}
+.save-button{
+  width: 100px;
+  float: left;
+  font-size: 1em;
+  background: #ffffff;
+  outline: #dddddd solid 1px;
+}
 }
 
-.input-font{
+@media only screen and (max-width: 887px){
+  .add-sign{
+    margin: 0 auto;
+    line-height: 80px;
+    width: 80px;
+    height: 80px;
+    align-content: center;
+    font-size: 2em;
+    color: #666666;
+    border: #999999 dashed 1px;
+  }
+  .title-input{
+    text-align: center;
+    width: 100%;
+    font-size: 3em;
+    border: none;
+    color: #666666;
+    background: #eeeeee;
+    height: 80px;
+    line-height: 80px;
+  }
+  .title-box{
+    display: block;
+    height: 130px;
+    margin: 30px 0px;
+    width: 100%;
+    /* border-bottom: black solid 1px; */
+    color: #bbbbbb;
+  }
+.left{
+  text-align: left;
+  float:left;
+  height:100%;
+  width:45%;
+  margin-right:5%;
+}
+.right{
+  text-align: left;
+  float:left;
+  width:45%;
+  margin-left:5%;
+}
+.save-button{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 100px;
+  float: left;
   font-size: 1em;
+  background: #ffffff;
+  outline: #dddddd solid 1px;
+}
+}
+
+
+
+
+
+.tp-input-font{
+  font-size:1em;
 }
 
 </style>

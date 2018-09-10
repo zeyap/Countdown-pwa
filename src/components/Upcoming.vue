@@ -1,14 +1,16 @@
 <template>
 <div class="wrapper">
-  <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="Hi Barb."/>
+  <div class="event-input-wrapper">
+  <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="Hi Barb.ฅ'ω'ฅ"/> 
+  </div>
   <div class="upcoming">
     <div v-for="item,id in upcomingList" class="event-card">
       <div class="hover-box purple" style="float:left"><div class="edit" v-on:click="editEvent(id)"><B>edit</B></div></div>
         <div class="card-left"><div class="text"><div><span class="countdown-large">{{item.remain.days}}</span><span class="countdown-small">days</span></div> <div class="countdown-small"><B>{{item.remain.hours}}</B>h <B>{{item.remain.minutes}}</B>m <B>{{item.remain.seconds}}</B>s </div></div></div>
         <div class="card-right">
           <div class="text">
-          <div class="meta-large">{{item.title}}</div>
-          <div class="meta-small"><img src="./location.png" class="location-icon" height="30" width="19">&nbsp&nbsp{{item.place}}</div>
+          <div class="meta-large">{{truncateString(item.title,7)}}</div>
+          <div class="meta-small"><img src="./location.png" class="location-icon" height="30" width="19">&nbsp&nbsp{{truncateString(item.place,8)}}</div>
           </div>
         </div>
       <div class="hover-box pink" style="float:right"><div class="remove" v-on:click="removeEvent(id)"><B>done</B></div></div>
@@ -28,6 +30,9 @@ import EventInput from './EventInput.vue';
 })
 export default class Upcoming extends Vue {
   @Prop() private upcomingList: any;
+  private truncateString = function(str: string, maxLen: number){
+    return str.length>maxLen?str.slice(0,maxLen)+'..':str;
+  }
   private timeBetween = function( date1: Date, date2: Date ) {
     //Get 1 day in milliseconds
     let one_day=1000*60*60*24;
@@ -83,16 +88,33 @@ export default class Upcoming extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.wrapper{
-  max-width: 600px;
-  margin: 0 auto;
+
+.event-card:hover{
+  box-shadow: 5px 5px 5px #bbbbbb;
+}
+@media only screen and (min-width: 887px){
+.event-input-wrapper{
+  width: 100%;
+  display: block;
+  position: absolute;
+  z-index: 10;
+}
+.upcoming{
+  position: absolute;
+  top: 200px;
+  display: block;
+  width: 100%;
 }
 .event-card{
-  width: 100%;
-  border: #dddddd solid 1px;
-  height: 140px;
-  margin: 20px 0;
-  padding: 20px 0;
+  position: relative;
+  float: left;
+  width: 360px;
+  outline: #dddddd solid 1px;
+  border-bottom: #ffffff solid 10px;
+  border-top: #ffffff solid 10px;
+  height: 180px;
+  margin: 20px 20px;
+  /* padding: 10px 0; */
   display: inline-block; 
   background: #ffffff;
 }
@@ -100,7 +122,47 @@ export default class Upcoming extends Vue {
   float: left;
   display: inline-block;
   height: 100%;
-  width: 25%;
+  width: 144px;
+  border-right: #dddddd solid 2px;
+}
+.card-right{
+  align-items: left;
+  text-align: left;
+  float: left;
+  height: 100%;
+  width: 142px;
+}
+}
+@media only screen and (max-width: 887px){
+.event-input-wrapper{
+  width: 90%;
+  margin-left:2.5%;
+  display: block;
+  position: absolute;
+  z-index: 10;
+}
+.upcoming{
+  position: absolute;
+  top: 260px;
+  display: block;
+  width: 100%;
+}
+.event-card{
+  position: relative;
+  width: 100%;
+  outline: #dddddd solid 1px;
+  border-bottom: #ffffff solid 10px;
+  border-top: #ffffff solid 10px;
+  height: 180px;
+  margin: 20px 0;
+  /* padding: 10px 0; */
+  background: #ffffff;
+}
+.card-left{
+  float: left;
+  display: inline-block;
+  height: 100%;
+  width: 40%;
   border-right: #dddddd solid 2px;
 }
 .card-right{
@@ -109,46 +171,59 @@ export default class Upcoming extends Vue {
   float: left;
   height: 100%;
 }
+}
 .hover-box{
   width: 5px;
   height:100%;
   display:inline-block;
+  background: #ffffff;
 }
 .purple{
+  position: absolute;
+  left:0;
+}
+.purple:hover{
   background: #893987;
 }
 .pink{
+  position: absolute;
+  right:0;
+}
+.pink:hover{
   background: #e54e71;
 }
 .hover-box:hover .edit{
-  display:inline-block;
+  width: 50px;
+  transition: 0.5s;
+  color: #ffffff;
 }
 .hover-box:hover{
   width:50px;
+  transition: 0.5s;
 }
 .hover-box:hover .remove{
-  display:inline-block;
+  width: 50px;
+  transition: 0.5s;
+  color: #ffffff;
 }
 .edit{
   float:left;
   height:100%;
-  display: none;
-  width:50px;
+  width:0;
   background: #893987;
-  color: white;
+  color: rgba(1,1,1,0);
 }
 
 .remove{
   float:right;
   height:100%;
-  display: none;
-  width:50px;
+  width:0;
   background: #e54e71;
-  color: white;
+  color: rgba(1,1,1,0);
 }
 
 .text{
-  padding: 0px 25px;
+  padding: 0px 20px;
   font-size: 1.5em;
 }
 .countdown-large{

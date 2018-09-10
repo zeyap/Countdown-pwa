@@ -112,14 +112,29 @@ export default class DatePicker extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@media only screen and (min-width: 887px){
 .date-picker-wrapper{
+  position: absolute;
+  top:30px;
   background: #ffffff;
   border: #dddddd solid 1px;
   width: 240px;
-  align-self:flex-end;
 }
+}
+
+@media only screen and (max-width: 887px){
+.date-picker-wrapper{
+  position: absolute;
+  top:55px;
+  background: #ffffff;
+  border: #dddddd solid 1px;
+  width: 240px;
+}
+}
+
 .cell{
   display:inline-block;
+  line-height: 30px;
   width: 30px;
   height:30px;
   text-align: center;

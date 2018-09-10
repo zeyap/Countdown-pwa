@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" >
       <Upcoming v-bind:upcomingList="formatEvents" />
   </div>
 </template>
@@ -24,7 +24,7 @@ import data from './assets/test_events.json';
 export default class App extends Vue {
   public formatEvents = [];
   created(){
-    if(undefined === window.localStorage.getItem('events')){
+    if(undefined === window.localStorage.getItem('events')||undefined === window.localStorage.getItem('events')){
       window.localStorage.setItem('events',JSON.stringify(data));
     }
     this.formatEvents = JSON.parse(window.localStorage.getItem('events') as any)
@@ -38,14 +38,20 @@ export default class App extends Vue {
 </script>
 
 <style>
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #eeeeee;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  padding-top: 60px;
-  min-height: 800px;
-  background: #eeeeee;
+  padding-top: 0;
 }
 </style>
