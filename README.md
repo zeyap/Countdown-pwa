@@ -4,8 +4,11 @@
 
 * Add a new event: 
  > type event name over "Hi Barb"
+
  > push the "+" button
+
  > select date & type event
+ 
  > push "save" button
 
 * Edit a countdown: Hover on the left of event cards
