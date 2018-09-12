@@ -3,14 +3,17 @@
 ## Manuals (!)
 
 * Add a new event: 
- > - type event name over "Hi Barb"
- > - push the "+" button
- > - select date & type event
- > - push "save" button
+ > type event name over "Hi Barb"
+ > push the "+" button
+ > select date & type event
+ > push "save" button
 
 * Edit a countdown: Hover on the left of event cards
 
 * Delete a countdown: Hover on the right of event cards
+
+* Responsive when scaling down the browser
+
 
 ## Notes on user interview:
 
@@ -26,4 +29,15 @@ Wireframe
 Prototype created with Sketch
 ![](wireframe2.png)
 
+## References
 
+Icons
+https://www.iconfinder.com/icons/510932/calendar_date_event_schedule_icon
+https://www.iconfinder.com/icons/984761/gps_location_map_navigation_pin_place_icon
+
+Responsive design
+https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=en
+https://internetingishard.com/html-and-css/responsive-design/
+
+localStorage example
+https://coderwall.com/p/ewxn9g/storing-and-retrieving-objects-with-localstorage-html5
