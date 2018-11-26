@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div class="help-button" v-on:click="()=>{isHelpShown = true;}" >Help</div>
+    <div class="help" v-show="isHelpShown" v-on:click="()=>{isHelpShown = false;}">
+      <div class="cross">X</div>
+      <p><B>Add event:</B> Click the left-top button to create new event</p>
+      <p><B>Edit event:</B> Double click left side of card</p>
+      <img width="80%" style="border: 1px solid #dddddd;border-radius:15px;" src="../assets/edit.png"/>
+      <p><B>Delete event:</B> Double click right side of card</p>
+      <img width="80%" style="border: 1px solid #dddddd;border-radius:15px;" src="../assets/delete.png"/>
+    </div>
     <div class="title-box">
       <div v-if="!isDropdownActive" v-on:click="toggleDropdown(this)" class="add-sign">+</div>
       <div v-if="isDropdownActive" v-on:click="addEvent(this)" class="add-sign add-sign-save">SAVE</div>
@@ -32,6 +41,7 @@ export default class EventInput extends Vue {
     protected isDatePickerActive = false;
     private placeholder = this.msg || ''; // placeholder 'placeholder' displays value of prop 'msg'
     private currEvent = new Event(new Date(), '', '', 0);
+    private isHelpShown = false;
 
     @Watch('currEventId',{
       immediate: true,
@@ -116,7 +126,7 @@ export default class EventInput extends Vue {
     text-align: center;
     color: #666666;
     border: #999999 dashed 1px;
-    border-radius: 50%;
+    border-radius: 5px;
     margin: 0 20px;
   }
   .title-input{
@@ -133,7 +143,7 @@ export default class EventInput extends Vue {
   .title-box{
     display: block;
     height: 80px;
-    margin: 30px 0px;
+    margin: 20px 0px;
     width: 100%;
     /* border-bottom: black solid 1px; */
     color: #bbbbbb;
@@ -179,6 +189,37 @@ export default class EventInput extends Vue {
   border: none;
   background: #eeeeee;
   border-radius: 10px;
+}
+
+.help-button{
+  color: #ad48aa;
+  position: fixed;
+  top:20px;
+  right:20px;
+  border: 1px solid #ad48aa;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+
+.help{
+  position: fixed;
+  top: 50%;
+  left:50%;
+  transform: translateX(-50%) translateY(-50%);
+  height: 80%;
+  width: 80%;
+  background: white;
+  border:1px solid #ad48aa;
+  border-radius: 5px;
+  padding: 20px;
+  overflow-x: scroll;
+}
+
+.cross{
+  position:absolute;
+  top:10px;
+  right:10px;
+  color:#ad48aa;
 }
 
 </style>
