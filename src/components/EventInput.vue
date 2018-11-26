@@ -6,9 +6,9 @@
       <div class="title-input-wrapper"><input type="text" v-bind:placeholder="placeholder" v-model="currEvent.title" class="title-input"/></div>
     </div>
     <div class="timeplace-input" v-if="isDropdownActive">
-      <div class="left"><span>TIME&nbsp&nbsp</span><input class="tp-input-font" type="text" v-bind:value="formatDate(currEvent.date)" v-on:blur="disableDatePicker(this)" v-on:focus="enableDatePicker(this)"/>
+      <div class="left"><span style="display:inline-block;width:150px;">TIME&nbsp&nbsp</span><input class="tp-input-font" type="text" v-bind:value="formatDate(currEvent.date)" v-on:blur="disableDatePicker(this)" v-on:focus="enableDatePicker(this)"/>
       <DatePicker v-if="isDatePickerActive" v-bind:currDate="currEvent.date" v-bind:setDate="changeDate(this)" v-bind:hide="disableDatePicker(this)"/></div>
-      <div class="right"><span>LOCATION&nbsp&nbsp</span><input class="tp-input-font" type="text" v-model="currEvent.place" /></div>
+      <div class="right"><span style="display:inline-block;width:150px;">LOCATION&nbsp&nbsp</span><input class="tp-input-font" type="text" v-model="currEvent.place" /></div>
     </div>
   </div>
 </template>
@@ -87,7 +87,7 @@ export default class EventInput extends Vue {
       if(this.currEventId!==-1){//make change
         
       }else{//add new
-        this.formatEvents.push(this.currEvent);
+        this.formatEvents.unshift(this.currEvent);
       }
       this.currEvent = new Event(new Date(), '', '', 0);
       this.setCurrEventId(-1);//why isn't this change watched
@@ -127,7 +127,7 @@ export default class EventInput extends Vue {
     border: none;
     border-bottom: 1px solid #666666;
     color: #666666;
-    background: #eeeeee;
+    background: white;
   }
   .title-box{
     display: block;
@@ -137,26 +137,28 @@ export default class EventInput extends Vue {
     /* border-bottom: black solid 1px; */
     color: #bbbbbb;
   }
-  .left{
-    margin-bottom: 10px;
+.left{
+  margin-bottom: 20px;
   text-align: left;
   float:left;
   height:100%;
-  width: 300px;
+  width: 50%;
 }
 .right{
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   text-align: left;
   float:left;
-  width: 300px;
+  width: 50%;
 }
 
 @media only screen and (max-width: 780px){
   .left{
     font-size: 0.8em;
+    width: 100%;
   }
   .right{
     font-size: 0.8em;
+    width: 100%;
   }
   .title-input{
      font-size: 1.2em;

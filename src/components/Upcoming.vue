@@ -137,8 +137,12 @@ export default class Upcoming extends Vue {
 .event-input-wrapper{
   width: 100%;
   display: block;
-  position: absolute;
+  position:fixed; 
+  top:0;
   z-index: 10;
+  background: white;
+  border:none;
+  border-bottom: 1px dashed #999999;
 }
 .upcoming{
   position: absolute;
@@ -156,7 +160,7 @@ export default class Upcoming extends Vue {
   border-bottom: #ffffff solid 10px;
   border-top: #ffffff solid 10px;
   height: 180px;
-  margin: 20px 20px;
+  margin: 40px 20px 0px 20px;
   /* padding: 10px 0; */
   display: inline-block; 
   background: #ffffff;
@@ -185,7 +189,7 @@ export default class Upcoming extends Vue {
   width: 360px;
 }
 .upcoming{
-  top: 170px;
+  top: 130px;
 }
 }
 @media only screen and (max-width: 780px){
@@ -193,7 +197,7 @@ export default class Upcoming extends Vue {
   width: 90%;
 }
 .upcoming{
-  top: 200px;
+  top: 130px;
 }
 }
 
