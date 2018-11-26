@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="event-input-wrapper">
-  <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="What's coming next?"/> 
+  <EventInput v-bind:setCurrEventId="(val)=>{currEventId=val}" v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="What's next?"/> 
   </div>
   <div class="upcoming">
     <div v-for="item,id in upcomingList" class="event-card">
@@ -27,6 +27,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import EventInput from './EventInput.vue';
+import { clearTimeout } from 'timers';
 
 @Component({
   components:{
@@ -35,6 +36,7 @@ import EventInput from './EventInput.vue';
 })
 export default class Upcoming extends Vue {
   @Prop() private upcomingList: any;
+  private timer:any;
   private truncateString = function(str: string, maxLen: number){
     return str.length>maxLen?str.slice(0,maxLen)+'..':str;
   }
@@ -69,7 +71,8 @@ export default class Upcoming extends Vue {
       let t = this.timeBetween(this.upcomingList[i].date,new Date());
       this.upcomingList[i].remain = t;
     }
-    setInterval(this.updateTime, 3000);
+    clearTimeout(this.timer);
+    this.timer = setInterval(this.updateTime, 1000);
   };
   private currEventId = -1;
   public editEvent(id:number){
@@ -234,7 +237,7 @@ export default class Upcoming extends Vue {
   word-wrap: break-word;
   text-overflow: ellipsis;
   overflow: hidden;
-  white-space: nowrap;
+  white-space: wrap;
 }
 .meta-small{
   padding:0;

@@ -27,6 +27,7 @@ export default class EventInput extends Vue {
     @Prop() private msg!: string;
     @Prop() public formatEvents: any;
     @Prop() public currEventId: any;
+    @Prop() public setCurrEventId: any;
     private isDropdownActive = false;
     protected isDatePickerActive = false;
     private placeholder = this.msg || ''; // placeholder 'placeholder' displays value of prop 'msg'
@@ -50,9 +51,7 @@ export default class EventInput extends Vue {
     };
     
     computed = {
-      setCurrEventId: function(this:any,val:number){
-        this.currEventId = val;
-      }
+      
     }
 
     private formatDate = function(date: any){
@@ -82,16 +81,18 @@ export default class EventInput extends Vue {
       }).bind(this);
     }
     private addEvent = function(this: any){
+      // console.log(this.currEventId)
       this.toggleDropdown();
       if(this.currEvent.title==='')return;//no content
       if(this.currEventId!==-1){//make change
-      
+        
       }else{//add new
         this.formatEvents.push(this.currEvent);
-        // this.currEvent = new Event(new Date(), '', '', 0);
       }
-      this.computed.setCurrEventId(-1);//why isn't this change watched
       this.currEvent = new Event(new Date(), '', '', 0);
+      this.setCurrEventId(-1);//why isn't this change watched
+      // console.log(this.formatEvents)
+      // console.log(this.currEventId)
     }
 }
 </script>
@@ -149,6 +150,19 @@ export default class EventInput extends Vue {
   float:left;
   width: 300px;
 }
+
+@media only screen and (max-width: 780px){
+  .left{
+    font-size: 0.8em;
+  }
+  .right{
+    font-size: 0.8em;
+  }
+  .title-input{
+     font-size: 1.2em;
+  }
+}
+
 .save-button{
   width: 100px;
   float: left;
