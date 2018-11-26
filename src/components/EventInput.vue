@@ -6,7 +6,7 @@
       <div class="title-input-wrapper"><input type="text" v-bind:placeholder="placeholder" v-model="currEvent.title" class="title-input"/></div>
     </div>
     <div class="timeplace-input" v-if="isDropdownActive">
-      <div class="left"><span>TIME&nbsp&nbsp</span><input class="tp-input-font" type="text" v-bind:value="formatDate(currEvent.date)" v-on:mouseover="enableDatePicker(this)"/>
+      <div class="left"><span>TIME&nbsp&nbsp</span><input class="tp-input-font" type="text" v-bind:value="formatDate(currEvent.date)" v-on:blur="disableDatePicker(this)" v-on:focus="enableDatePicker(this)"/>
       <DatePicker v-if="isDatePickerActive" v-bind:currDate="currEvent.date" v-bind:setDate="changeDate(this)" v-bind:hide="disableDatePicker(this)"/></div>
       <div class="right"><span>LOCATION&nbsp&nbsp</span><input class="tp-input-font" type="text" v-model="currEvent.place" /></div>
     </div>
@@ -105,7 +105,6 @@ export default class EventInput extends Vue {
   width: 100%;
   padding-left: 20px;
 }
-@media only screen and (min-width: 887px) {
   .add-sign{
     float: left;
     width: 80px;
@@ -119,11 +118,13 @@ export default class EventInput extends Vue {
     margin: 0 20px;
   }
   .title-input{
+    width: calc(100% - 150px);
     float:left;
-    font-size: 3em;
+    font-size: 2em;
     height: 80px;
     line-height: 80px;
     border: none;
+    border-bottom: 1px solid #666666;
     color: #666666;
     background: #eeeeee;
   }
@@ -136,12 +137,14 @@ export default class EventInput extends Vue {
     color: #bbbbbb;
   }
   .left{
+    margin-bottom: 10px;
   text-align: left;
   float:left;
   height:100%;
   width: 300px;
 }
 .right{
+  margin-bottom: 10px;
   text-align: left;
   float:left;
   width: 300px;
@@ -153,65 +156,6 @@ export default class EventInput extends Vue {
   background: #ffffff;
   outline: #dddddd solid 1px;
 }
-}
-
-@media only screen and (max-width: 887px){
-  .add-sign{
-    margin: 0 auto;
-    line-height: 80px;
-    width: 80px;
-    height: 80px;
-    align-content: center;
-    font-size: 2em;
-    color: #666666;
-    border: #999999 dashed 1px;
-  }
-  .title-input{
-    text-align: center;
-    width: 100%;
-    font-size: 3em;
-    border: none;
-    color: #666666;
-    background: #eeeeee;
-    height: 80px;
-    line-height: 80px;
-  }
-  .title-box{
-    display: block;
-    height: 130px;
-    margin: 30px 0px;
-    width: 100%;
-    /* border-bottom: black solid 1px; */
-    color: #bbbbbb;
-  }
-.left{
-  text-align: left;
-  float:left;
-  height:100%;
-  width:45%;
-  margin-right:5%;
-}
-.right{
-  text-align: left;
-  float:left;
-  width:45%;
-  margin-left:5%;
-}
-.save-button{
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 100px;
-  float: left;
-  font-size: 1em;
-  background: #ffffff;
-  outline: #dddddd solid 1px;
-}
-}
-
-
-
-
 
 .tp-input-font{
   font-size:1em;

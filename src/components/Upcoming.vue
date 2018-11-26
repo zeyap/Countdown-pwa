@@ -1,19 +1,24 @@
 <template>
-<div class="wrapper">
+<div>
   <div class="event-input-wrapper">
-  <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="Hi Barb.ฅ'ω'ฅ"/> 
+  <EventInput v-bind:currEventId="currEventId" v-bind:formatEvents="upcomingList" msg="What's coming next?"/> 
   </div>
   <div class="upcoming">
     <div v-for="item,id in upcomingList" class="event-card">
-      <div class="hover-box purple" style="float:left"><div class="edit" v-on:click="editEvent(id)"><B>edit</B></div></div>
-        <div class="card-left"><div class="text"><div><span class="countdown-large">{{item.remain.days}}</span><span class="countdown-small">days</span></div> <div class="countdown-small"><B>{{item.remain.hours}}</B>h <B>{{item.remain.minutes}}</B>m <B>{{item.remain.seconds}}</B>s </div></div></div>
-        <div class="card-right">
-          <div class="text">
-          <div class="meta-large">{{truncateString(item.title,7)}}</div>
-          <div class="meta-small"><img src="./location.png" class="location-icon" height="30" width="19">&nbsp&nbsp{{truncateString(item.place,8)}}</div>
-          </div>
+      <div class="event-card-inside">
+        <div class="card-left-above" v-on:click="editEvent(id)"></div>
+        <div class="card-right-above" v-on:click="removeEvent(id)"></div>
+
+      <div class="purple"><B>edit</B></div>
+      <div class="card-left"><div class="text"><div><span class="countdown-large">{{item.remain.days}}</span><span class="countdown-small">days</span></div> <div class="countdown-small"><B>{{item.remain.hours}}</B>h <B>{{item.remain.minutes}}</B>m <B>{{item.remain.seconds}}</B>s </div></div></div>
+      <div class="card-right">
+        <div class="text">
+        <div class="meta-large">{{item.title}}</div>
+        <div class="meta-small"><img src="./location.png" class="location-icon" height="30" width="19">&nbsp&nbsp{{item.place}}</div>
         </div>
-      <div class="hover-box pink" style="float:right"><div class="remove" v-on:click="removeEvent(id)"><B>done</B></div></div>
+      </div>
+      <div class="pink"><B>done</B></div>
+      </div>
     </div>
   </div>
 </div>
@@ -64,7 +69,7 @@ export default class Upcoming extends Vue {
       let t = this.timeBetween(this.upcomingList[i].date,new Date());
       this.upcomingList[i].remain = t;
     }
-    setInterval(this.updateTime, 1000);
+    setInterval(this.updateTime, 5000);
   };
   private currEventId = -1;
   public editEvent(id:number){
@@ -90,9 +95,9 @@ export default class Upcoming extends Vue {
 <style scoped>
 
 .event-card:hover{
-  box-shadow: 5px 5px 5px #bbbbbb;
+  box-shadow: 5px 5px 5px #cacaca;
 }
-@media only screen and (min-width: 887px){
+
 .event-input-wrapper{
   width: 100%;
   display: block;
@@ -101,13 +106,15 @@ export default class Upcoming extends Vue {
 }
 .upcoming{
   position: absolute;
-  top: 200px;
-  display: block;
+  top: 150px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
   width: 100%;
 }
 .event-card{
   position: relative;
-  float: left;
   width: 360px;
   outline: #dddddd solid 1px;
   border-bottom: #ffffff solid 10px;
@@ -118,112 +125,96 @@ export default class Upcoming extends Vue {
   display: inline-block; 
   background: #ffffff;
 }
-.card-left{
-  float: left;
-  display: inline-block;
-  height: 100%;
-  width: 144px;
-  border-right: #dddddd solid 2px;
-}
-.card-right{
-  align-items: left;
-  text-align: left;
-  float: left;
-  height: 100%;
-  width: 142px;
-}
-}
-@media only screen and (max-width: 887px){
-.event-input-wrapper{
-  width: 90%;
-  margin-left:2.5%;
-  display: block;
-  position: absolute;
-  z-index: 10;
-}
-.upcoming{
-  position: absolute;
-  top: 260px;
-  display: block;
+
+.event-card-inside{
   width: 100%;
-}
-.event-card{
-  position: relative;
-  width: 100%;
-  outline: #dddddd solid 1px;
-  border-bottom: #ffffff solid 10px;
-  border-top: #ffffff solid 10px;
-  height: 180px;
-  margin: 20px 0;
-  /* padding: 10px 0; */
-  background: #ffffff;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 .card-left{
-  float: left;
-  display: inline-block;
   height: 100%;
   width: 40%;
   border-right: #dddddd solid 2px;
 }
 .card-right{
-  align-items: left;
-  text-align: left;
-  float: left;
   height: 100%;
+  width: 60%;
+}
+
+@media only screen and (min-width: 780px){
+.event-card{
+  width: 360px;
+}
+.upcoming{
+  top: 170px;
 }
 }
-.hover-box{
-  width: 5px;
-  height:100%;
-  display:inline-block;
-  background: #ffffff;
+@media only screen and (max-width: 780px){
+.event-card{
+  width: 90%;
 }
+.upcoming{
+  top: 200px;
+}
+}
+
 .purple{
-  position: absolute;
-  left:0;
-}
-.purple:hover{
-  background: #893987;
-}
-.pink{
-  position: absolute;
-  right:0;
-}
-.pink:hover{
-  background: #e54e71;
-}
-.hover-box:hover .edit{
-  width: 50px;
-  transition: 0.5s;
-  color: #ffffff;
-}
-.hover-box:hover{
-  width:50px;
-  transition: 0.5s;
-}
-.hover-box:hover .remove{
-  width: 50px;
-  transition: 0.5s;
-  color: #ffffff;
-}
-.edit{
-  float:left;
+  box-shadow: 0px -10px 0px 0px #ad48aa, 0px 10px 0px 0px #ad48aa;
   height:100%;
-  width:0;
-  background: #893987;
+  width: 0;
   color: rgba(1,1,1,0);
 }
 
-.remove{
-  float:right;
+.pink{
+  box-shadow: 0px -10px 0px 0px #e54e71, 0px 10px 0px 0px #e54e71;
   height:100%;
-  width:0;
-  background: #e54e71;
+  width: 0;
   color: rgba(1,1,1,0);
+}
+
+.card-left-above{
+  width: 40%;
+  position: absolute;
+  left:0;
+  height:100%;
+}
+.card-left-above:hover ~.card-left{
+  border: none;
+}
+
+.card-right-above{
+  width: 40%;
+  position: absolute;
+  right:0;
+  height:100%;
+}
+.card-left-above:hover ~ .purple{
+  width: 20%;
+  transition: width 0.5s;
+  background: #ad48aa;
+  color: #ffffff;
+}
+.card-left-above:hover ~.card-right{
+  display: none;
+}
+
+.card-right-above:hover ~ .pink{
+  width: 20%;
+  transition: width 0.5s;
+  background: #e54e71;
+  color: #ffffff;
+}
+
+.card-right-above:hover ~.card-left{
+  display: none;
 }
 
 .text{
-  padding: 0px 20px;
+  width:100%;
+  height:100%;
   font-size: 1.5em;
 }
 .countdown-large{
@@ -235,11 +226,26 @@ export default class Upcoming extends Vue {
   font-size: 0.7em;
 }
 .meta-large{
+  width: 100%;
+  height: 50%;
   font-size: 1.5em;
+  margin-left: 15px;
+  text-align: left;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .meta-small{
   padding:0;
+  height: 50%;
   color: #999999;
+  text-align: left;
+  margin-left: 15px;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .location-icon{
   padding: 20px 0 0 0

@@ -29,10 +29,10 @@ export default class App extends Vue {
     }
     this.formatEvents = JSON.parse(window.localStorage.getItem('events') as any)
     ['default'].map((e: any) => new Event(e.date, e.title, e.place, e.status));
-    let self = this;
-    window.addEventListener('beforeunload',function(){
-      window.localStorage.setItem('events',JSON.stringify({'default':self.formatEvents}));
-    })
+  };
+
+  beforeDestroy() {
+    window.localStorage.setItem('events',JSON.stringify({'default':this.formatEvents}));
   };
 }
 </script>
