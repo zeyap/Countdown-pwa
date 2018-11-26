@@ -6,7 +6,7 @@
   <div class="upcoming">
     <div v-for="item,id in upcomingList" class="event-card">
       <div class="event-card-inside">
-        <div class="card-left-above" v-on:click="editEvent(id)"></div>
+        <div class="card-left-above" v-on:click="editEvent(id)" v-on:mouseleave="clearClickTime()"></div>
         <div class="card-right-above" v-on:click="removeEvent(id)"></div>
 
       <div class="purple"><B>edit</B></div>
@@ -78,6 +78,12 @@ export default class Upcoming extends Vue {
 
   private lastClickEditId= -1;
   private clickEditTime=0;
+  public clearClickTime (){
+    this.lastClickEditId= -1;
+    this.clickEditTime=0;
+    this.lastClickRemoveId= -1;
+    this.clickRemoveTime=0;
+  }
   public editEvent(id:number){
     
     if(id === this.lastClickEditId){
@@ -90,7 +96,6 @@ export default class Upcoming extends Vue {
       this.clickEditTime = 0;
     }
     this.lastClickEditId = id;
-    
   }
 
   private lastClickRemoveId= -1;
@@ -109,7 +114,6 @@ export default class Upcoming extends Vue {
       this.clickRemoveTime = 0;
     }
     this.lastClickRemoveId = id;
-    
     
   }
   mounted(){
