@@ -7,7 +7,7 @@
     <div v-for="item,id in upcomingList" class="event-card">
       <div class="event-card-inside">
         <div class="card-left-above" v-on:click="editEvent(id)" v-on:mouseleave="clearClickTime()"></div>
-        <div class="card-right-above" v-on:click="removeEvent(id)"></div>
+        <div class="card-right-above" v-on:click="removeEvent(id)" v-on:mouseleave="clearClickTime()"></div>
 
       <div class="purple"><B>edit</B></div>
       <div class="card-left"><div class="text"><div><span class="countdown-large">{{item.remain.days}}</span><span class="countdown-small">days</span></div> <div class="countdown-small"><B>{{item.remain.hours}}</B>h <B>{{item.remain.minutes}}</B>m <B>{{item.remain.seconds}}</B>s </div></div></div>
