@@ -71,17 +71,46 @@ export default class Upcoming extends Vue {
       let t = this.timeBetween(this.upcomingList[i].date,new Date());
       this.upcomingList[i].remain = t;
     }
-    clearTimeout(this.timer);
-    this.timer = setInterval(this.updateTime, 1000);
+    window.clearTimeout(this.timer);
+    this.timer = window.setInterval(this.updateTime, 1000);
   };
   private currEventId = -1;
+
+  private lastClickEditId= -1;
+  private clickEditTime=0;
   public editEvent(id:number){
-    this.currEventId = id;
-  }
-  public removeEvent(id:number){
-    if(confirm('You are deleting a countdown')){
-      this.upcomingList.splice(id,1);
+    
+    if(id === this.lastClickEditId){
+      this.clickEditTime++;
+    }else{
+      this.clickEditTime=1;
     }
+    if(this.clickEditTime===2){
+      this.currEventId = id;
+      this.clickEditTime = 0;
+    }
+    this.lastClickEditId = id;
+    
+  }
+
+  private lastClickRemoveId= -1;
+  private clickRemoveTime=0;
+  public removeEvent(id:number){
+    
+    if(id === this.lastClickRemoveId){
+      this.clickRemoveTime++;
+    }else{
+      this.clickRemoveTime=1;
+    }
+    if(this.clickRemoveTime===2){
+      if(confirm('You are deleting a countdown')){
+        this.upcomingList.splice(id,1);
+      }
+      this.clickRemoveTime = 0;
+    }
+    this.lastClickRemoveId = id;
+    
+    
   }
   mounted(){
     this.updateTime();
@@ -179,7 +208,7 @@ export default class Upcoming extends Vue {
 }
 
 .card-left-above{
-  width: 40%;
+  width: 20%;
   position: absolute;
   left:0;
   height:100%;
@@ -189,7 +218,7 @@ export default class Upcoming extends Vue {
 }
 
 .card-right-above{
-  width: 40%;
+  width: 20%;
   position: absolute;
   right:0;
   height:100%;
@@ -231,7 +260,7 @@ export default class Upcoming extends Vue {
 .meta-large{
   width: 100%;
   height: 50%;
-  font-size: 1.5em;
+  font-size: 1em;
   margin-left: 15px;
   text-align: left;
   word-wrap: break-word;
@@ -242,6 +271,7 @@ export default class Upcoming extends Vue {
 .meta-small{
   padding:0;
   height: 50%;
+  font-size: 0.8em;
   color: #999999;
   text-align: left;
   margin-left: 15px;
