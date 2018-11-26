@@ -112,9 +112,13 @@ export default class DatePicker extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.date-picker-wrapper{
+  border-radius: 15px;
+}
 @media only screen and (min-width: 887px){
 .date-picker-wrapper{
   position: absolute;
+  left:120px;
   background: #ffffff;
   border: #dddddd solid 1px;
   width: 240px;
@@ -124,6 +128,7 @@ export default class DatePicker extends Vue {
 @media only screen and (max-width: 887px){
 .date-picker-wrapper{
   position: absolute;
+  left:120px;
   background: #ffffff;
   border: #dddddd solid 1px;
   width: 240px;
@@ -146,6 +151,7 @@ export default class DatePicker extends Vue {
   /* margin: auto; */
   background: #893987;
   color: #ffffff;
+  border-radius: 15px 15px 0 0;
 }
 .calendar{
   padding: 15px;

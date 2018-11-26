@@ -142,7 +142,7 @@ export default class Upcoming extends Vue {
   z-index: 10;
   background: white;
   border:none;
-  border-bottom: 1px dashed #999999;
+  border-bottom: 1px solid #dddddd;
 }
 .upcoming{
   position: absolute;
@@ -156,9 +156,10 @@ export default class Upcoming extends Vue {
 .event-card{
   position: relative;
   width: 360px;
-  outline: #dddddd solid 1px;
+
   border-bottom: #ffffff solid 10px;
   border-top: #ffffff solid 10px;
+  border-radius: 15px;
   height: 180px;
   margin: 40px 20px 0px 20px;
   /* padding: 10px 0; */
@@ -202,6 +203,7 @@ export default class Upcoming extends Vue {
 }
 
 .purple{
+  border-radius: 15px 0 0 15px;
   box-shadow: 0px -10px 0px 0px #ad48aa, 0px 10px 0px 0px #ad48aa;
   height:100%;
   width: 0;
@@ -209,6 +211,7 @@ export default class Upcoming extends Vue {
 }
 
 .pink{
+  border-radius: 0 15px 15px 0;
   box-shadow: 0px -10px 0px 0px #e54e71, 0px 10px 0px 0px #e54e71;
   height:100%;
   width: 0;

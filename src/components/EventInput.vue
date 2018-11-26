@@ -112,10 +112,11 @@ export default class EventInput extends Vue {
     height: 80px;
     align-content: center;
     line-height: 80px;
-    font-size: 2em;
+    font-size: 1.5em;
     text-align: center;
     color: #666666;
     border: #999999 dashed 1px;
+    border-radius: 50%;
     margin: 0 20px;
   }
   .title-input{
@@ -125,7 +126,7 @@ export default class EventInput extends Vue {
     height: 80px;
     line-height: 80px;
     border: none;
-    border-bottom: 1px solid #666666;
+    border-bottom: 1px solid #dddddd;
     color: #666666;
     background: white;
   }
@@ -175,6 +176,9 @@ export default class EventInput extends Vue {
 
 .tp-input-font{
   font-size:1em;
+  border: none;
+  background: #eeeeee;
+  border-radius: 10px;
 }
 
 </style>
