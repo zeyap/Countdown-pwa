@@ -23,7 +23,6 @@ import Event from './components/Event';
 export default class App extends Vue {
   public formatEvents = [];
   created(){
-    
     if(null === window.localStorage.getItem('events')||undefined === window.localStorage.getItem('events')){
       window.localStorage.setItem('events',JSON.stringify({'default':[]}));
     }
