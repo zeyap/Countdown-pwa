@@ -10,7 +10,6 @@ import { Component, Vue, Prop } from 'vue-property-decorator';
 import Upcoming from './components/Upcoming.vue';
 
 import Event from './components/Event';
-import data from './assets/test_events.json';
 
 // const testData = data.default
 //   .map((e: any) => new Event(e.date, e.title, e.place, e.status));
@@ -24,15 +23,18 @@ import data from './assets/test_events.json';
 export default class App extends Vue {
   public formatEvents = [];
   created(){
-    if(null === window.localStorage.getItem('events')){
-      window.localStorage.setItem('events',JSON.stringify(data));
+    
+    if(null === window.localStorage.getItem('events')||undefined === window.localStorage.getItem('events')){
+      window.localStorage.setItem('events',JSON.stringify({'default':[]}));
     }
+    console.log(window.localStorage.getItem('events'))
     this.formatEvents = JSON.parse(window.localStorage.getItem('events') as any)
     ['default'].map((e: any) => new Event(e.date, e.title, e.place, e.status));
-  };
 
-  beforeDestroy() {
-    window.localStorage.setItem('events',JSON.stringify({'default':this.formatEvents}));
+    let self = this;
+    window.addEventListener('beforeunload',function(){
+      window.localStorage.setItem('events',JSON.stringify({'default':self.formatEvents}));
+    });
   };
 }
 </script>

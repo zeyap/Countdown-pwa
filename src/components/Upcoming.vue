@@ -69,7 +69,7 @@ export default class Upcoming extends Vue {
       let t = this.timeBetween(this.upcomingList[i].date,new Date());
       this.upcomingList[i].remain = t;
     }
-    setInterval(this.updateTime, 5000);
+    setInterval(this.updateTime, 3000);
   };
   private currEventId = -1;
   public editEvent(id:number){
